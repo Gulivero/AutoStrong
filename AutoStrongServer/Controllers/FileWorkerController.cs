@@ -49,12 +49,17 @@ public class FileWorkerController : ControllerBase
         try
         {
             var result = new List<FileData>();
-            var files = Directory.GetFiles(folderPath);
+            var files = Directory.GetFiles(folderPath, "*.jpg");
             foreach (var file in files)
             {
+                var fileName = Path.GetFileNameWithoutExtension(file);
+                var textFile = folderPath + fileName + ".txt";
+                using var reader = new StreamReader(textFile);
+
                 var item = new FileData
                 {
-                    Name = Path.GetFileName(file),
+                    Name = fileName,
+                    Description = await reader.ReadToEndAsync(ct),
                     Data = await System.IO.File.ReadAllBytesAsync(file, ct)
                 };
 

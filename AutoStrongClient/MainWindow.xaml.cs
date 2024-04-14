@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
+using Models;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -12,9 +14,17 @@ namespace AutoStrongClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static readonly HttpClient client = new();
         public MainWindow()
         {
             InitializeComponent();
+            GetAllFiles();
+        }
+
+        private void GetAllFiles()
+        {
+            using var response = client.GetAsync("http://localhost:5244/FileWorker/GetAllFiles").Result;
+            var content = response.Content.ReadFromJsonAsync<IEnumerable<FileData>>().Result;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -45,16 +55,14 @@ namespace AutoStrongClient
                 { new StringContent(textImage.Text), $"{Path.GetFileNameWithoutExtension(fileName)}text" }
             };
 
-            using var client = new HttpClient();
             using var response = await client.PostAsync("http://localhost:5244/FileWorker/SaveFile", multipartFormContent);
-
-            var responseText = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show($"Файл успешно сохранен!");
             }
             else
             {
+                var responseText = await response.Content.ReadAsStringAsync();
                 MessageBox.Show($"Ошибка во время сохранения файла: {responseText}");
             }
         }
