@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Button Content="Загрузить" HorizontalAlignment="Left" Margin="160,198,0,0" VerticalAlignment="Top" Width="100" Height="28" Click="Button_Click_1"/>
+        <Button Content="Выбрать файл" HorizontalAlignment="Left" Margin="160,130,0,0" VerticalAlignment="Top" Width="100" Height="28" Click="Button_Click"/>
+        <TextBox x:Name="textImage" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="250" Height="95"/>
+        <Image x:Name="newImage" HorizontalAlignment="Left" Height="100" Margin="10,130,0,0" VerticalAlignment="Top" Width="131"/>
     </Grid>
 </Window>

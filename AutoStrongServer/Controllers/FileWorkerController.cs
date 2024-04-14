@@ -15,12 +15,22 @@ public class FileWorkerController : ControllerBase
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> SaveFile([FromBody] FileData file, CancellationToken ct)
+    public async Task<IActionResult> SaveFile(CancellationToken ct)
     {
         try
         {
-            var path = folderPath + file.Name;
-            await System.IO.File.WriteAllBytesAsync(path, file.Data, ct);
+            var form = HttpContext.Request.Form;
+            foreach(var file in form.Files)
+            {
+                var imagePath = folderPath + file.FileName;
+                var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                var textPath = folderPath + fileName + ".txt";
+
+                await using var textStream = new StreamWriter(textPath, false);
+                await using var imageStream = new FileStream(imagePath, FileMode.Create);
+                await file.CopyToAsync(imageStream, ct);
+                await textStream.WriteAsync(form[$"{fileName}text"]);
+            }
 
             return Ok("Файл успешно сохранён.");
         }
