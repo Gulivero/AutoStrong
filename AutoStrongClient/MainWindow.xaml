@@ -11,13 +11,13 @@
         <Button x:Name="selectButton" Command="{Binding SelectCommand}" Content="Выбрать файл" HorizontalAlignment="Left" Margin="160,130,0,0" VerticalAlignment="Top" Width="100" Height="28"/>
         <TextBox x:Name="textImage" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="95"/>
         <Image x:Name="newImage" Source="{Binding Source, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="290" Margin="10,130,0,0" VerticalAlignment="Top" Width="142"/>
-        <ListView x:Name="images" ItemsSource="{Binding Images}" Margin="277,10,10,10">
+        <ListView x:Name="images" ItemsSource="{Binding Images, UpdateSourceTrigger=PropertyChanged}" Margin="277,10,10,10">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Картинка" Width="300">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <!--<Image Source="{Binding Data}" Width="280" Height="450"/>-->
+                                <Image Source="{Binding Image}" Height="150"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

@@ -15,7 +15,7 @@ namespace AutoStrongClient
             var imagesViewModel = new ImagesViewModel();
             var selectTextViewModel = new SelectTextViewModel();
             var selectButtonViewModel = new SelectButtonViewModel();
-            var uploadButtonViewModel = new UploadButtonViewModel(selectButtonViewModel, selectTextViewModel);
+            var uploadButtonViewModel = new UploadButtonViewModel(selectButtonViewModel, selectTextViewModel, imagesViewModel);
 
             images.DataContext = imagesViewModel;
             textImage.DataContext = selectTextViewModel;
