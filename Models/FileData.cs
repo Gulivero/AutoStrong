@@ -2,6 +2,6 @@
 
 public class FileData
 {
-    public string Name { get; set; }
-    public byte[] Data { get; set; }
+    public required string Name { get; set; }
+    public required byte[] Data { get; set; }
 }

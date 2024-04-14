@@ -34,7 +34,7 @@ public class FileWorkerController : ControllerBase
     }
 
     [HttpGet("[action]")]
-    public async Task<IEnumerable<FileData>> GetAllImages(CancellationToken ct)
+    public async Task<IEnumerable<FileData>> GetAllFiles(CancellationToken ct)
     {
         try
         {
