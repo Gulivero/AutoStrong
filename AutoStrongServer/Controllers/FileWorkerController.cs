@@ -28,6 +28,7 @@ public class FileWorkerController : ControllerBase
 
                 await using var textStream = new StreamWriter(textPath, false);
                 await using var imageStream = new FileStream(imagePath, FileMode.Create);
+
                 await file.CopyToAsync(imageStream, ct);
                 await textStream.WriteAsync(form[$"{fileName}text"]);
             }
@@ -48,10 +49,14 @@ public class FileWorkerController : ControllerBase
     {
         try
         {
+            var extensions = new[] { "*.jpg", "*.png" };
+            var files = new List<string>();
+            foreach (var extension in extensions)
+            {
+                files.AddRange(Directory.GetFiles(folderPath, extension));
+            }
+
             var result = new List<FileData>();
-            var jpgFiles = Directory.GetFiles(folderPath, "*.jpg");
-            var pngFiles = Directory.GetFiles(folderPath, "*.png");
-            var files = jpgFiles.Concat(pngFiles);
             foreach (var file in files)
             {
                 var fileName = Path.GetFileNameWithoutExtension(file);
