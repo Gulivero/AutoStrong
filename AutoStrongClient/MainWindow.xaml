@@ -24,7 +24,7 @@
                     <GridViewColumn Header="Текст" Width="210">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Description}" Margin="5"/>
+                                <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
