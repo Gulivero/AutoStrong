@@ -9,8 +9,8 @@ internal class RelayCommand : ICommand
 
     public event EventHandler CanExecuteChanged
     {
-        add { CommandManager.RequerySuggested += value; }
-        remove { CommandManager.RequerySuggested -= value; }
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
     }
 
     public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
@@ -21,7 +21,7 @@ internal class RelayCommand : ICommand
 
     public bool CanExecute(object parameter)
     {
-        return canExecute == null || canExecute(parameter);
+        return canExecute is null || canExecute(parameter);
     }
 
     public void Execute(object parameter)
