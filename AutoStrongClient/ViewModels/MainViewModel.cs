@@ -40,8 +40,8 @@ internal class MainViewModel : INotifyPropertyChanged
         }
     }
 
-    private string path;
-    public string Path
+    private string? path;
+    public string? Path
     {
         get => path;
         set
@@ -109,7 +109,7 @@ internal class MainViewModel : INotifyPropertyChanged
             Source = new BitmapImage(new Uri(openFileDialog.FileName));
         }
 
-        Path = Source.ToString().Remove(0, 8);
+        Path = Source?.ToString().Remove(0, 8);
     });
 
     public MainViewModel()
@@ -132,17 +132,21 @@ internal class MainViewModel : INotifyPropertyChanged
 
     private void AddImageToList(string name, string? description, BitmapImage image)
     {
+        var existingImage = Images.FirstOrDefault(i => i.Name == name);
+        if (existingImage is not null)
+        {
+            existingImage.Description = description;
+            existingImage.Image = image;
+
+            return;
+        }
+
         var item = new ImageData
         {
             Name = name,
             Description = description,
             Image = image
         };
-
-        if (Images.Any(i => i.Name == name))
-        {
-            return;
-        }
 
         Images.Add(item);
     }

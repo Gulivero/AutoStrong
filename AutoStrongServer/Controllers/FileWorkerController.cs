@@ -49,7 +49,9 @@ public class FileWorkerController : ControllerBase
         try
         {
             var result = new List<FileData>();
-            var files = Directory.GetFiles(folderPath, "*.jpg");
+            var jpgFiles = Directory.GetFiles(folderPath, "*.jpg");
+            var pngFiles = Directory.GetFiles(folderPath, "*.png");
+            var files = jpgFiles.Concat(pngFiles);
             foreach (var file in files)
             {
                 var fileName = Path.GetFileNameWithoutExtension(file);
